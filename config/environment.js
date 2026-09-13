@@ -1,18 +1,17 @@
-// Load environment variables from the .env file.
+// Load environment var from the .env file.
 require('dotenv').config();
 
-// Store application-level configuration.
+//Store applevel config.
 const environment = {
 
-    // Base URL of the application.
+    //Base URL 
     baseURL: 'https://www.saucedemo.com',
 
-    // Username loaded securely from the environment.
+    // Username loaded securely from the env.
     username: process.env.SAUCE_USERNAME,
 
-    // Password loaded securely from the environment.
+    // Password loaded securely from the env.
     password: process.env.SAUCE_PASSWORD
 };
 
-// Export the environment configuration.
 module.exports = environment;

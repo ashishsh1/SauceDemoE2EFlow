@@ -30,9 +30,7 @@ class CartPage extends BasePage {
             const cartItem = this.cartItems.nth(index);
 
             // Read the product name.
-            const name = await cartItem
-                .locator('.inventory_item_name')
-                .textContent();
+            const name = await cartItem.locator('.inventory_item_name').textContent();
 
             // Add the cleaned product name to the array.
             productNames.push(name.trim());
@@ -43,8 +41,6 @@ class CartPage extends BasePage {
     }
 
     async proceedToCheckout() {
-
-        // Click the Checkout button.
         await this.checkoutButton.click();
     }
 }

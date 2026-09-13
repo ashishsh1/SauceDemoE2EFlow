@@ -6,26 +6,19 @@ class FileUtils {
     static getGeneratedFilePath(fileName) {
 
         // Define the generated artifacts directory.
-        const generatedDirectory =
-            path.join(process.cwd(), 'generated');
+        const generatedDirectory =path.join(process.cwd(), 'generated');
 
         // Create the directory if it does not exist.
-        fs.mkdirSync(generatedDirectory, {
-            recursive: true
-        });
+        fs.mkdirSync(generatedDirectory, {recursive: true});
 
         // Return the complete file path.
-        return path.join(
-            generatedDirectory,
-            fileName
-        );
+        return path.join(generatedDirectory,fileName);
     }
 
     static async saveDownload(download, fileName) {
 
         // Get the destination path.
-        const filePath =
-            this.getGeneratedFilePath(fileName);
+        const filePath =this.getGeneratedFilePath(fileName);
 
         // Save the downloaded file.
         await download.saveAs(filePath);
@@ -43,8 +36,7 @@ class FileUtils {
     static getFileSize(filePath) {
 
         // Get file information.
-        const fileStats =
-            fs.statSync(filePath);
+        const fileStats =fs.statSync(filePath);
 
         // Return the file size in bytes.
         return fileStats.size;

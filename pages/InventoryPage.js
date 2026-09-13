@@ -30,21 +30,14 @@ class InventoryPage extends BasePage {
 
             const productCard = this.productCards.nth(index);
 
-            const name = await productCard
-                .locator('.inventory_item_name')
-                .textContent();
+            const name = await productCard.locator('.inventory_item_name').textContent();
 
-            const priceText = await productCard
-                .locator('.inventory_item_price')
-                .textContent();
+            const priceText = await productCard.locator('.inventory_item_price').textContent();
 
             // Convert price from "$29.99" to numeric value 29.99.
             const price = Number(priceText.replace('$', ''));
 
-            products.push({
-                name: name.trim(),
-                price
-            });
+            products.push({name: name.trim(),price});
         }
 
         return products;
@@ -69,14 +62,10 @@ class InventoryPage extends BasePage {
     async addProduct(productName) {
 
         // Find the product card using the product name.
-        const productCard = this.productCards.filter({
-            hasText: productName
-        });
+        const productCard = this.productCards.filter({hasText: productName});
 
         // Click the Add to cart button inside that product card.
-        await productCard.getByRole('button', {
-            name: /Add to cart/i
-        }).click();
+        await productCard.getByRole('button', {name: /Add to cart/i}).click();
     }
 
     async getCartCount() {
@@ -91,7 +80,6 @@ class InventoryPage extends BasePage {
     }
 
     async openCart() {
-        // Open the shopping cart.
         await this.cartButton.click();
     }
 

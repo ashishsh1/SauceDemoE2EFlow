@@ -9,9 +9,6 @@ const CompletePage = require('../pages/CompletePage');
 const testData = require('../data/testData');
 const environment = require('../config/environment.js');
 
-const path = require('path');
-const fs = require('fs');
-
 const PDFReader = require('../utils/PDFReader');
 const FileUtils=require('../utils/FileUtils.js');
 
@@ -42,9 +39,7 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
 
 
     // Login using credentials from the environment configuration.
-    await loginPage.login(
-        environment.username,
-        environment.password
+    await loginPage.login(environment.username, environment.password
     );
 
 
@@ -59,39 +54,25 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
     await inventoryPage.sortByPriceLowToHigh();
 
     // Validate that products are sorted correctly.
-    const isSorted =
-        await inventoryPage.isSortedByPriceLowToHigh();
-
+    const isSorted = await inventoryPage.isSortedByPriceLowToHigh();
     expect(isSorted).toBe(true);
 
 
     // Get dynamically identified products.
-    const products =
-        await inventoryPage.getProducts();
+    const products = await inventoryPage.getProducts();
 
-    // Identify the cheapest product.
+    // Identify the cheapest and expensive product.
     const cheapestProduct = products[0];
-
-    // Identify the most expensive product.
-    const mostExpensiveProduct =
-        products[products.length - 1];
+    const mostExpensiveProduct = products[products.length - 1];
 
 
-    // Add the cheapest product to the cart.
-    await inventoryPage.addProduct(
-        cheapestProduct.name
-    );
-
-    // Add the most expensive product to the cart.
-    await inventoryPage.addProduct(
-        mostExpensiveProduct.name
-    );
+    // Add the cheapest and expensive product to the cart.
+    await inventoryPage.addProduct(cheapestProduct.name);
+    await inventoryPage.addProduct(mostExpensiveProduct.name );
 
 
     // Verify that the cart contains two products.
-    const cartCount =
-        await inventoryPage.getCartCount();
-
+    const cartCount = await inventoryPage.getCartCount();
     expect(cartCount).toBe(2);
 
 
@@ -99,13 +80,11 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
     await inventoryPage.openCart();
 
     // Verify that the Cart page is displayed.
-    await expect(cartPage.cartTitle)
-        .toHaveText('Your Cart');
+    await expect(cartPage.cartTitle).toHaveText('Your Cart');
 
 
     // Get product names displayed in the Cart.
-    const cartProductNames =
-        await cartPage.getCartItemNames();
+    const cartProductNames = await cartPage.getCartItemNames();
 
 
     // Verify that the cheapest product is present.
@@ -120,8 +99,7 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
 
 
     // Verify the Checkout: Your Information page.
-    await expect(checkoutPage.checkoutTitle)
-        .toHaveText('Checkout: Your Information');
+    await expect(checkoutPage.checkoutTitle).toHaveText('Checkout: Your Information');
 
 
     // Enter customer information from test data.
@@ -137,14 +115,12 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
 
 
     // Verify that the Checkout Overview page is displayed.
-    await expect(checkoutPage.checkoutTitle)
-        .toHaveText('Checkout: Overview');
+    await expect(checkoutPage.checkoutTitle).toHaveText('Checkout: Overview');
 
 
     // Capture order information from the Checkout Overview page.
     // This data will be used later to verify the generated PDF.
-    const orderSummary =
-        await checkoutPage.getOrderSummary();
+    const orderSummary = await checkoutPage.getOrderSummary();
 
 
     // Finish the order.
@@ -152,23 +128,19 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
 
 
     // Verify that the final confirmation page is displayed.
-    await expect(completePage.completeTitle)
-        .toHaveText('Checkout: Complete!');
+    await expect(completePage.completeTitle).toHaveText('Checkout: Complete!');
 
 
     // Get the order confirmation message.
-    const confirmationMessage =
-        await completePage.getConfirmationMessage();
+    const confirmationMessage = await completePage.getConfirmationMessage();
 
     // Verify that the order was successfully placed.
-    expect(confirmationMessage)
-        .toContain('Thank you for your order!');
+    expect(confirmationMessage).toContain('Thank you for your order!');
 
 
     // Click the application's "Generate PDF Order" button
     // and capture the browser download.
-    const download =
-        await completePage.downloadOrderPdf();
+    const download = await completePage.downloadOrderPdf();
 
 
     // Save the application-generated PDF.
@@ -185,8 +157,7 @@ test('Verify SauceDemo end to end purchase Flow', async ({page}) => {
     const pdfText =await PDFReader.readText(pdfPath);
 
 
-    // Verify every product captured from
-    // Checkout Overview is present in the PDF.
+    // Verify every product captured from Checkout Overview is present in the PDF.
     for (const product of orderSummary.products) {
         // Verify the product name.
         expect(pdfText)

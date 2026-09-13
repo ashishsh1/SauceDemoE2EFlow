@@ -9,8 +9,7 @@ class PDFReader {
         const pdfBuffer = fs.readFileSync(filePath);
 
         // Create a PDF parser using the PDF buffer.
-        const parser = new PDFParse({
-            data: pdfBuffer
+        const parser = new PDFParse({data: pdfBuffer
         });
 
         // Extract text from the PDF.

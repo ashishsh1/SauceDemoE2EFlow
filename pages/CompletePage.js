@@ -12,9 +12,7 @@ class CompletePage extends BasePage {
         this.confirmationMessage = page.locator('.complete-header');
 
         // Generate PDF order button.
-        this.generatePdfButton = page.getByRole('button', {
-            name: /Generate PDF order/i
-        });
+        this.generatePdfButton = page.getByRole('button', {name: /Generate PDF order/i});
     }
 
     async getConfirmationMessage() {
