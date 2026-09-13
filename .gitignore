@@ -1,0 +1,14 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+generated/
+
+# macOS files
+.DS_Store
+# Environment variables / secrets
+.env
