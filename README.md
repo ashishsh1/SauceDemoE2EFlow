@@ -34,6 +34,7 @@ The implementation is designed to demonstrate practical automation framework des
 - **Runtime:** Node.js
 - **Design Pattern:** Page Object Model (POM)
 - **PDF Validation:** pdf-parse
+- **Environment Management:** dotenv
 - **Reporting:** Playwright HTML Report
 - **CI/CD:** GitHub Actions
 
@@ -85,7 +86,8 @@ saucedemo-playwright/
 │   └── CompletePage.js
 │
 ├── utils/
-│   └── PDFReader.js
+│   ├── PDFReader.js
+│   └── FileUtils.js
 │
 ├── tests/
 │   └── purchase.spec.js
